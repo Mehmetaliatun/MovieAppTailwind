@@ -4,6 +4,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 
 //* Your web app's Firebase configuration
@@ -53,8 +54,11 @@ export const userObserver = () => {
     if (user) {
       console.log(user);
     } else {
-      // User is signed out
-      // ...
+      console.log("User signed out");
     }
   });
+};
+
+export const logOut = () => {
+  signOut(auth);
 };
