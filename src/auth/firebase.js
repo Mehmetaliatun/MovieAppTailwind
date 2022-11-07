@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
@@ -44,4 +45,16 @@ export const signIn = async (email, password, navigate) => {
   } catch (error) {
     alert(error.message);
   }
+};
+
+export const userObserver = () => {
+  //? kullanicinin signin olup olmadiğini takip eden ve kullanici degistiginde yeni kullaniciyi response olarak donen firebase metodu
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log(user);
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
 };
