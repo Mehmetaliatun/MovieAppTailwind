@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GoogleIcon from "../assets/icons/GoogleIcon";
+import { createUser } from "../auth/firebase";
 
 const Register = () => {
   //! ayri stateler
@@ -17,7 +18,8 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(firstName, lastName, email, password);
+    createUser(email, password);
+    console.log(firstName, lastName);
   };
 
   // const handleChange=(e)=> setInfo

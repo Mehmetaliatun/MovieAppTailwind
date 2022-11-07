@@ -1,3 +1,4 @@
+import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
@@ -17,7 +18,8 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-const createUser = async () => {
+export const createUser = async (email, password) => {
+  //? yeni bir kullanici olusturmak icin kullanilan firebase metodu
   try {
     let userCredential = await createUserWithEmailAndPassword(
       auth,
