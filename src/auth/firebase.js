@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
@@ -32,6 +33,7 @@ export const createUser = async (email, password, navigate, displayName) => {
       email,
       password
     );
+    //? kullanici profilini goruntulemek icin update
     await updateProfile(auth.currentUser, {
       displayName: displayName,
     });
@@ -67,4 +69,9 @@ export const userObserver = (setCurrentUser) => {
 
 export const logOut = () => {
   signOut(auth);
+};
+//! google ile giris enable
+//*authentication => sign-in-method => enable Google
+export const signUpWithGoogle = () => {
+  const provider = new GoogleAuthProvider();
 };
