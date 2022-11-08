@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
+import { AuthContext } from "../context/AuthContextProvider";
 
 const API_KEY = process.env.REACT_APP_TMDB_KEY;
 const FEATURED_API = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`;
@@ -9,6 +10,8 @@ const SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}
 const Main = () => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { currentUser } = useContext(AuthContext);
   useEffect(() => {
     getMovies(FEATURED_API);
   }, []);
@@ -22,7 +25,14 @@ const Main = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getMovies(SEARCH_API + searchTerm);
+    if (searchTerm && currentUser) {
+      getMovies(SEARCH_API + searchTerm);
+      setSearchTerm("");
+    } else if (!currentUser) {
+      alert("Please login to see details");
+    } else {
+      alert("Please enter a text ");
+    }
   };
 
   return (
@@ -33,6 +43,7 @@ const Main = () => {
           className="w-80 h-8 rounded-md outline-none border p-1 m-2"
           placeholder="Search a movie..."
           onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchTerm}
         />
         <button className="text-white" type="submit">
           Search
