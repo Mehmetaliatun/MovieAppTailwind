@@ -17,10 +17,12 @@ const Main = () => {
   }, []);
 
   const getMovies = (API) => {
+    setLoading(true);
     axios
       .get(API)
       .then((res) => setMovies(res.data.results))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
   };
 
   const handleSubmit = (e) => {
@@ -50,9 +52,16 @@ const Main = () => {
         </button>
       </form>
       <div className="flex justify-center flex-wrap">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} {...movie} />
-        ))}
+        {loading ? (
+          <div
+            className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-600 mt-52"
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        ) : (
+          movies.map((movie) => <MovieCard key={movie.id} {...movie} />)
+        )}
       </div>
     </>
   );
