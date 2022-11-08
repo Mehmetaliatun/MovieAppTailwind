@@ -5,6 +5,9 @@ import { logOut } from "../auth/firebase";
 import { AuthContext } from "../context/AuthContextProvider";
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
+  //* with custom hook
+  // const {currentUser}= useAuthContext();
+
   // const currentUser = { displayName: "mehmet ali" };
   // const currentUser = false;
   return (
