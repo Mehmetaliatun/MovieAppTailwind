@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import MovieCard from "../components/MovieCard";
 import { AuthContext } from "../context/AuthContextProvider";
 
@@ -12,6 +12,7 @@ const Main = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const { currentUser } = useContext(AuthContext);
+
   useEffect(() => {
     getMovies(FEATURED_API);
   }, []);
@@ -31,9 +32,9 @@ const Main = () => {
       getMovies(SEARCH_API + searchTerm);
       setSearchTerm("");
     } else if (!currentUser) {
-      alert("Please login to see details");
+      alert("please log in to see details");
     } else {
-      alert("Please enter a text ");
+      alert("please enter a text");
     }
   };
 

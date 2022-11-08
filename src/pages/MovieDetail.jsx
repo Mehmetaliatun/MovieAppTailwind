@@ -4,15 +4,15 @@ import { Link, useParams } from "react-router-dom";
 
 const MovieDetail = () => {
   const [movieDetails, setMovieDetails] = useState("");
-
   const { id } = useParams();
+
   const {
     title,
     poster_path,
     overview,
-    release_date,
     vote_average,
     vote_count,
+    release_date,
   } = movieDetails;
 
   const API_KEY = process.env.REACT_APP_TMDB_KEY;

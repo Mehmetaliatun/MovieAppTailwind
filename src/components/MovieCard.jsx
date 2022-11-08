@@ -9,10 +9,11 @@ const defaultImage =
 const MovieCard = ({ poster_path, title, overview, vote_average, id }) => {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const getVoteClass = (vote) => {
-    if (vote > 8) {
+    if (vote >= 8) {
       return "green";
-    } else if (vote > 6) {
+    } else if (vote >= 6) {
       return "orange";
     } else {
       return "red";
@@ -23,7 +24,7 @@ const MovieCard = ({ poster_path, title, overview, vote_average, id }) => {
       className="movie"
       onClick={() => {
         navigate("details/" + id);
-        !currentUser && alert("Please login to see details");
+        !currentUser && alert("please log in to see details");
       }}
     >
       <img
@@ -35,7 +36,7 @@ const MovieCard = ({ poster_path, title, overview, vote_average, id }) => {
         <h5>{title}</h5>
         {currentUser && (
           <span className={`tag ${getVoteClass(vote_average)}`}>
-            {vote_average}{" "}
+            {vote_average.toFixed(1)}
           </span>
         )}
       </div>

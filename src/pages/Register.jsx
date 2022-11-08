@@ -4,19 +4,19 @@ import GoogleIcon from "../assets/icons/GoogleIcon";
 import { createUser, signUpWithGoogle } from "../auth/firebase";
 
 const Register = () => {
-  //! ayri stateler
+  //* ayrı stateler
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  //! birlestirilmis stateler
+  //* birleştirilmiş state
   // const [info, setInfo] = useState({
-  //   firstName:"",
-  //   lastName:"",
-  //   password:"",
-  //   email:"",
-  // })
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   password: "",
+  // });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,7 +29,8 @@ const Register = () => {
     signUpWithGoogle(navigate);
   };
 
-  // const handleChange=(e)=> setInfo
+  // const hadleChange = (e) =>
+  //   setInfo({ ...info, [e.target.id]: e.target.value });
 
   return (
     <div className="flex justify-center">

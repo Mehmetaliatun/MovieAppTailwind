@@ -9,9 +9,13 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { toastSuccessNotify } from "../helpers/ToastNotify";
 
 //* Your web app's Firebase configuration
 // TODO: Replace the following with your app's Firebase project configuration
+//* https://firebase.google.com/docs/auth/web/start
+//* https://console.firebase.google.com/ => project settings
+//! firebase console settings bölümünden firebaseconfig ayarlarını al
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_apiKey,
   authDomain: process.env.REACT_APP_authDomain,
@@ -27,36 +31,40 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 export const createUser = async (email, password, navigate, displayName) => {
-  //? yeni bir kullanici olusturmak icin kullanilan firebase metodu
+  //? yeni bir kullanıcı oluşturmak için kullanılan firebase metodu
   try {
     let userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    //? kullanici profilini goruntulemek icin update
+    //? kullanıcı profilini güncellemek için kullanılan firebase metodu
     await updateProfile(auth.currentUser, {
       displayName: displayName,
     });
     navigate("/");
+    toastSuccessNotify("Registered successfully!");
     console.log(userCredential);
   } catch (error) {
     alert(error.message);
   }
 };
 
-//! email/password ile girisi enable yap
+//* https://console.firebase.google.com/
+//* => Authentication => sign-in-method => enable Email/password
+//! Email/password ile girişi enable yap
 export const signIn = async (email, password, navigate) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     navigate("/");
+    toastSuccessNotify("Logged in successfully!");
   } catch (error) {
     alert(error.message);
   }
 };
 
 export const userObserver = (setCurrentUser) => {
-  //? kullanicinin signin olup olmadiğini takip eden ve kullanici degistiginde yeni kullaniciyi response olarak donen firebase metodu
+  //? Kullanıcının signin olup olmadığını takip eden ve kullanıcı değiştiğinde yeni kullanıcıyı response olarak dönen firebase metodu
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const { email, displayName, photoURL } = user;
@@ -64,7 +72,7 @@ export const userObserver = (setCurrentUser) => {
       console.log(user);
     } else {
       setCurrentUser(false);
-      console.log("User signed out");
+      console.log("user signed out");
     }
   });
 };
@@ -72,6 +80,9 @@ export const userObserver = (setCurrentUser) => {
 export const logOut = () => {
   signOut(auth);
 };
+
+//* https://console.firebase.google.com/
+//* => Authentication => sign-in-method => enable Google
 //! Google ile girişi enable yap
 //* => Authentication => settings => Authorized domains => add domain
 //! Projeyi deploy ettikten sonra google sign-in çalışması için domain listesine deploy linkini ekle
